@@ -44,7 +44,7 @@ class GenusController extends Controller
     public function listAction() {
         $em = $this->getDoctrine()->getManager();
         $genuses = $em->getRepository('AppBundle\Entity\Genus')
-        ->findAllPublishedOrderedBySize();
+        ->findAllPublishedOrderedByRecentlyActive();
 
         return $this->render(':genus:list.html.twig', [
             'genuses' => $genuses,
@@ -80,8 +80,18 @@ class GenusController extends Controller
         $this->get('logger')
             ->info('Showing genus: '.$genusName);
 
+        $recentNotes = $em->getRepository('AppBundle:GenusNote')
+          ->findAllRecentNotesForGenus($genus);
+        /*
+        $recentNotes = $genus->getNotes()
+          ->filter(function (GenusNote $note) {
+              return $note->getCreatedAt() > new \DateTime('-3 months');
+          });
+        */
+
         return $this->render('genus/show.html.twig', array(
-            'genus' => $genus
+            'genus' => $genus,
+            'recentNotesCount' => count($recentNotes),
         ));
     }
 
