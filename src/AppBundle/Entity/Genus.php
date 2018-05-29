@@ -46,7 +46,7 @@ class Genus
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $isPublished;
+    protected $isPublished = true;
 
     /**
      * @return mixed
