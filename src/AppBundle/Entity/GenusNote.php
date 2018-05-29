@@ -43,6 +43,11 @@ class GenusNote
     protected $createdAt;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Genus")
+     */
+    protected $genus;
+
+    /**
      * @return mixed
      */
     public function getUsername()
@@ -121,6 +126,21 @@ class GenusNote
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGenus() {
+        return $this->genus;
+    }
+
+    /**
+     * @param mixed $genus
+     */
+    public function setGenus(Genus $genus) {
+        $this->genus = $genus;
+    }
+
 
 
 }
